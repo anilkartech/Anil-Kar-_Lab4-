@@ -198,6 +198,9 @@ select Cus_Name,Cus_Gender from customer where Cus_Name like 'A%' or Cus_Name li
 If rating >4 print “Good Service”, If rating >2 print “Average Service” else print “Poor Service”.
  */
  
+ DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RateService`()
+BEGIN
  select supp.Supp_Id,supp.Supp_Name,rat.Rat_Ratstars,
  CASE
   WHEN rat.Rat_Ratstars = 5 THEN 'Excellence Service'
@@ -209,3 +212,5 @@ from supplier supp
  inner join supplier_pricing sp on sp.Supp_Id = supp.Supp_Id
  inner join ecommerce.order o on sp.Pricing_Id = o.Pricing_Id
  inner join rating rat on rat.Ord_Id = o.Ord_Id;
+END$$
+DELIMITER ;
